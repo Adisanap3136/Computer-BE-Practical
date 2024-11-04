@@ -1,0 +1,30 @@
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract SimpleBankDeposit {
+    mapping(address => uint256) private balances;
+
+    //deposit
+    event Deposited(address indexed account, uint256 amount);
+    function deposit(uint256 amount) public {
+        require(amount > 0, "Deposit amount must be greater than 0");
+        balances[msg.sender] += amount;
+        emit Deposited(msg.sender, amount);
+    }
+
+   
+
+
+    //withdraw
+    event Withdrawn(address indexed account, uint256 amount);
+function withdraw(uint256 amount) public {
+        require(balances[msg.sender] >= amount, "Insufficient balance");
+        balances[msg.sender] -= amount; // Correctly updating the balance
+    }
+
+    //check the balance
+     function getBalance() public view returns (uint256) {
+        return balances[msg.sender];
+    }
+    
+}
